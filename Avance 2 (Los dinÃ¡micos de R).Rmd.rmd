@@ -1,0 +1,331 @@
+---
+title: "<center> TRABAJO GRUPAL </center>"
+date: "`r Sys.Date()`"
+author: Ronald Casafranca (20182202) y Bárbara del Castillo (20173266)
+output:
+  rmdformats::readthedown:
+    code_folding: show
+    self_contained: true
+    thumbnails: false
+    lightbox: false
+pkgdown:
+  as_is: true
+---
+
+```{r,echo=FALSE, out.width="30%"}
+knitr::include_graphics("logo-vector-pucp.jpg") 
+```
+
+
+**Integrantes:**
+
++ Ronald Casafranca Zamalloa (20182202) 
++ Bárbara del Castillo (20173266)
+
+**Tipo de evaluación:**
+
++ Avance 2
+
+**Curso:**
+
++ Estadística para el Análisis Político 2 (0690)
+
+**Profesora:**
+
++ Marylía Cruz
+
+---
+
+## Introducción
+
+Perú es un país que presenta varios capítulos controversiales en torno a su relación con las Fuerzas Armadas y la Policía Nacional, desde participaciones durante el Conflicto Armado Interno, en las dos últimas décadas del anterior siglo, hasta desalojos arbitrarios actuales a trabajadores informales ubicados en la calle, los cuales configuran una percepción de estas Fuerzas del orden ante la opinión pública peruana. Recuérdese que las labores de la Policía Nacional y las FFAA resultan garantizar, mantener y restablecer el orden interno; así como defender al Perú de sus amenazas y proteger sus intereses respectivamente (Arhuata & Edward, 2016).
+
+Frente a su cuestionable actuar en los conflictos socioambientales de los últimos años como el caso de Espinar, Tía María y Conga, la investigación considera que se ha generado un importante impacto en la confianza en estas instituciones junto a la permanente inseguridad y corrupción que resulta un vínculo constante en el tiempo para estas dos entidades. Estos tres problemas públicos en los que las Fuerzas del orden se ven involucradas, sugieren repensar y analizar la relación de estas con la ciudadanía para replantear y garantizar una mejor percepción pública. Por esta razón, la indagación a este problema ha conducido a establecer tres factores (variables independientes) asociados al problema observado (confianza en las Fuerzas del orden): la represión del Estado, la corrupción y la inseguridad.
+
+Por ello, el estudio encuentra necesario observar a qué responden las variaciones en esta confianza y bajo qué mecanismos se generan. El autor Cohaila señala que la formulación de la opinión pública en temas como la corrupción se genera en base a experiencias propias y a la observación tanto directa como a través de los medios de estas problemáticas. Su despreocupación puede generar una evaluación ciudadana que guarde consecuencias gravísimas para estas instituciones, tales como una posible negación de la legitimidad pública o el establecimiento de vínculos de estas entidades frente a la captura inconstitucional del Estado. Es por ello que existe una importancia frente al estudio y supervisión periódica de este tipo de indicadores.
+
+Según la encuesta realizada por Ipsos sobre el nivel de confianza de los peruanos en las instituciones públicas del país en septiembre del 2017, las FF.AA. cuentan con un nivel de confianza del 65%, siendo así una de las instituciones más confiables, mientras que la Policía Nacional continúa siendo vista con desconfianza por la ciudadanía (55% desconfianza).
+
+Cabe mencionar que si bien el nivel de confianza en las FFAA se encuentra sobre los 50 puntos, Perú es uno de los países con menor índice de confianza en esta institución. Ferrer considera que esto puede ser por causa de los abusos cometidos en la lucha contra la subversión armada, sobre todo, en el gobierno de Fujimori debido a la sensación de corrupción al interior de las instituciones públicas que se vivió en aquella época, principalmente en el Ejército (2015).
+
+Como se puede observar es altamente necesario que el vínculo de las Fuerzas del orden con la sociedad se fortalezca para así poder generar credibilidad, ya que un alto porcentaje de desconfianza puede provocar que las bases del Estado democrático se vean amenazadas y que la gobernabilidad del país se vea afectada tal como sucedió en los noventas. Lo que nos dice Carrasco sobre esto es que se deben “establecer procesos de comunicación para conocer las necesidades y expectativas de la comunidad [...] de tal manera que sea posible incrementar los niveles de credibilidad, confianza y posicionamiento por parte de la ciudadanía” (2016).
+
+Es por ello que el objetivo general de la presente investigación es identificar los factores que más influyeron en el nivel de confianza de los peruanos hacia las Fuerzas del orden (FFAA y PNP) en el 2018, mientras que los objetivos específicos consisten, por un lado, en crear un modelo a partir del cual se pueda comprender la confianza en las Fuerzas del orden para la ciudadanía peruana y, por otro lado, en establecer un perfil de una persona que confíe en estas instituciones.
+
+De esta manera, nuestra investigación busca responder a ¿qué factores influyeron dentro del nivel de confianza en las Fuerzas del orden para la población peruana durante el 2018? Ante ello planteamos como hipótesis central que la represión del Estado, la corrupción, la inseguridad y el narcotráfico fueron los factores que más influyeron, durante el 2018, en el nivel de confianza de los peruanos hacia las Fuerzas del orden (FFAA y PNP).
+
+---
+
+## Análisis descriptivo y operacionalización de las variables
+
+```{r}
+#install.packages("rmdformats")
+library(rmdformats)
+```
+
+```{r echo=TRUE}
+library(rio)
+data=import("https://github.com/Ronald-Casafranca/Trabajo-Estad-stica/raw/main/Base%20de%20datos%20e%20info/Latinobarometro_2018_Esp_R_v20190303.rds")
+names(data)
+```
+
++ Creación de subset relacionado al estudio peruano:
+```{r}
+data=subset(data,IDENPA==604)
+table(data$IDENPA)
+```
+
+---
+
+1. Observando el comportamiento de nuestra **primera variable "Confianza en las Fuerzas Armadas peruanas"**
+```{r}
+str(data$P15STGBSC.A)
+table(data$P15STGBSC.A)
+```
+
++ Traduciendo como NA opciones de *No sabe, No contesta, No preguntada*:
+```{r}
+data$P15STGBSC.A[data$P15STGBSC.A == "-4"] <- NA
+data$P15STGBSC.A[data$P15STGBSC.A == "-2"] <- NA
+data$P15STGBSC.A[data$P15STGBSC.A == "-1"] <- NA
+```
+
++ Obteniendo nuestra variable de la siguiente manera:
+```{r}
+table(data$P15STGBSC.A)
+```
+
+---
+
+2. Observando el comportamiento de nuestra **segunda variable "Confianza en la policía peruana"**
+```{r}
+str(data$P15STGBSC.B)
+table(data$P15STGBSC.B)
+```
+
++ Traduciendo como NA opciones de *No sabe, No contesta*:
+```{r}
+data$P15STGBSC.B[data$P15STGBSC.B == "-2"] <- NA
+data$P15STGBSC.B[data$P15STGBSC.B == "-1"] <- NA
+```
+
++ Obteniendo nuestra variable de la siguiente manera:
+```{r}
+table(data$P15STGBSC.B)
+```
+
+---
+
+3. Creación del Índice **Confianza en las Fuerzas del orden** (variable dependiente y de estudio)
+```{r}
+data$confianza=(data$P15STGBSC.A+data$P15STGBSC.B)
+summary(data$confianza)
+```
+
+```{r message=FALSE, warning=FALSE}
+data$confianza=((data$confianza-2)/6)*100
+summary(data$confianza)
+```
+
+---
+
+Respecto a las variables independientes involucradas en el estudio serán 3: 
+
++ Corrupción
+
++ Represión del Estado
+
++ Inseguridad
+
+
+**A. Corrupción:**
+
++ Para efectos de esta variable analizaremos cómo evalúa la ciudadanía el problema de corrupción generalizada hacia las diversas insitituciones del Estado y grupos de poder condiciona nuestra confianza hacia las fuerzas del orden. Para ello, operacionalizaremos las diversas preguntas en torno a corrupción en diversas instancias para obtener un índice apropiado para conocer la percepción de corrupción generalizada en el país.
+
+
+Personas involucradas en corrupción: **Presidente y sus funcionarios**
+```{r}
+str(data$P71TI.A)
+table(data$P71TI.A)
+```
+
++ Traduciendo como NA opciones de *No sabe, No contesta*:
+```{r}
+data$P71TI.A[data$P71TI.A == "-2"] <- NA
+data$P71TI.A[data$P71TI.A == "-1"] <- NA
+table(data$P71TI.A)
+```
+
+Personas involucradas en corrupción: **Los parlamentarios**
+```{r}
+str(data$P72TI.B)
+table(data$P72TI.B)
+```
+
++ Traduciendo como NA opciones de *No sabe, No contesta*:
+```{r}
+data$P72TI.B[data$P72TI.B == "-2"] <- NA
+data$P72TI.B[data$P72TI.B == "-1"] <- NA
+table(data$P72TI.B)
+```
+
+Personas involucradas en corrupción: **Los empleados públicos**
+```{r}
+str(data$P73TI.C)
+table(data$P73TI.C)
+```
+
++ Traduciendo como NA opciones de *No sabe, No contesta*:
+```{r}
+data$P73TI.C[data$P73TI.C == "-2"] <- NA
+data$P73TI.C[data$P73TI.C == "-1"] <- NA
+table(data$P73TI.C)
+```
+
+Personas involucradas en corrupción: **Consejales del gobierno local**
+```{r}
+str(data$P74TI.D)
+table(data$P74TI.D)
+```
+
++ Traduciendo como NA opciones de *No sabe, No contesta*:
+```{r}
+data$P74TI.D[data$P74TI.D == "-2"] <- NA
+data$P74TI.D[data$P74TI.D == "-1"] <- NA
+table(data$P74TI.D)
+```
+
+Personas involucradas en corrupción: **La policía**
+```{r}
+str(data$P75TI.E)
+table(data$P75TI.E)
+```
+
++ Traduciendo como NA opciones de *No sabe, No contesta*:
+```{r}
+data$P75TI.E[data$P75TI.E == "-2"] <- NA
+data$P75TI.E[data$P75TI.E == "-1"] <- NA
+table(data$P75TI.E)
+```
+
+Personas involucradas en corrupción: **Oficina Nacional de impuestos**
+```{r}
+str(data$P76TI.F)
+table(data$P76TI.F)
+```
+
++ Traduciendo como NA opciones de *No sabe, No contesta*:
+```{r}
+data$P76TI.F[data$P76TI.F == "-2"] <- NA
+data$P76TI.F[data$P76TI.F == "-1"] <- NA
+table(data$P76TI.F)
+```
+
+Personas involucradas en corrupción: **Jueces y magistrados**
+```{r}
+str(data$P77TI.G)
+table(data$P77TI.G)
+```
+
++ Traduciendo como NA opciones de *No sabe, No contesta*:
+```{r}
+data$P77TI.G[data$P77TI.G == "-2"] <- NA
+data$P77TI.G[data$P77TI.G == "-1"] <- NA
+table(data$P77TI.G)
+```
+
+Personas involucradas en corrupción: **Líderes religiosos**
+```{r}
+str(data$P78TI.H)
+table(data$P78TI.H)
+```
+
++ Traduciendo como NA opciones de *No sabe, No contesta*:
+```{r}
+data$P78TI.H[data$P78TI.H == "-2"] <- NA
+data$P78TI.H[data$P78TI.H == "-1"] <- NA
+table(data$P78TI.H)
+```
+
+Personas involucradas en corrupción: **Empresarios**
+```{r}
+str(data$P79TI.I)
+table(data$P79TI.I)
+```
+
++ Traduciendo como NA opciones de *No sabe, No contesta*:
+```{r}
+data$P79TI.I[data$P79TI.I == "-2"] <- NA
+data$P79TI.I[data$P79TI.I == "-1"] <- NA
+table(data$P79TI.I)
+```
+---
+
+**4.** Creación de Índice de **corrupción generalizada en Perú**
+```{r}
+data$corrupcion=(data$P71TI.A+data$P72TI.B+data$P73TI.C+data$P74TI.D+data$P75TI.E+data$P76TI.F+data$P77TI.G+data$P78TI.H+data$P79TI.I)
+summary(data$corrupcion)
+```
+
+```{r}
+data$corrupcion=((data$corrupcion-9)/27)*100
+summary(data$corrupcion)
+```
+
+---
+
+
+**B. Represión del Estado:**
+
++ ¿La violencia de Estado es frecuente donde usted vive?
+```{r}
+str(data$P68ST.BG)
+table(data$P68ST.BG)
+```
+```{r}
+data$P68ST.BG=as.factor(data$P68ST.BG)
+levels(data$P68ST.BG)=c("Si","No")
+table(data$P68ST.BG)
+```
+
+---
+
+**C. Inseguridad:**
+
++ ¿Con qué frecuencia se preocupa usted de que pueda llegar a ser víctima de un delito con violencia?
+```{r}
+str(data$P70ST)
+table(data$P70ST)
+```
+
++ Traduciendo como NA opciones de *No contesta*:
+```{r}
+data$P70ST[data$P70ST == "-1"] <- NA
+data$P70ST=as.factor(data$P70ST)
+levels(data$P70ST)=c("Todo o casi todo el tiempo","Algunas veces","Ocasionalmente","Nunca")
+table(data$P70ST)
+```
+---
+
+**5.** Proyecciones de la investigación
+
+- El estudio planteará establecer un modelo multinomial para predecir la variable confianza en las Fuerzas del orden. Para ello las variables independientes de corrupción, represión del Estado e inseguridad ciudadana buscarán participar como variables independientes de este modelo. Así mismo, el modelo propondrá un perfil de confianza en las Fuerzas del orden en torno a un ciudadano que cumpla determinadas características de las variables seleccionadas para esta investigación.
+
+---
+
+## Bibliografía
+
+Arhuata, A., & Edward, L. (2016). Caracterización de la confianza en las instituciones del gobierno del Perú (Doctoral dissertation, Universidad de Buenos Aires. Facultad de Ciencias Exactas y Naturales). https://bibliotecadigital.exactas.uba.ar/download/tesis/tesis_n6061_ArcayaArhuata.pdf
+
+Carrasco Llavilla, M. S. (2016). La comunicación para volver a ganar la confianza de la ciudadanía a través de las redes sociales de la Policía Nacional del Perú. http://repositorio.bausate.edu.pe/handle/bausate/85
+
+Cohaila, E. (2020). Confianza interpersonal y corrupción en Perú: análisis de modelos de ecuaciones estructurales. Perfiles latinoamericanos: revista de la Facultad Latinoamericana de Ciencias Sociales, Sede México, 28(56), 151-175. https://dialnet.unirioja.es/servlet/articulo?codigo=7613293
+
+Ferrer, O. I. (2015). Percepciones sobre las Fuerzas Armadas en el continente americano. Revista Política y Estrategia, (126), 105-132. https://www.politicayestrategia.cl/index.php/rpye/article/view/65
+
+García, L. A. M. (2017). La implementación de estrategias por parte de la Policía Nacional del Perú para la generación de confianza en el Alto Huallaga en el período 2010-2014. Pontificia Universidad Catolica del Peru-CENTRUM Catolica (Peru). https://tesis.pucp.edu.pe/repositorio/handle/20.500.12404/8044
+
+PALMA, H., & del Perú, R. E. (1999). Desarme y seguridad: una nueva agenda de América Latina y el Caribe para el próximo milenio, Medidas Regionales de Fomento a la Confianza. Lima/Perú, dic. https://hugopalma.academy/hp-docs/06.%20El%20Fomento%20de%20la%20Confianza/Desarme%20y%20Seguridad%20Hugo%20Palma%20OPANAL%20Lima%201999.pdf
+
+Sanjinez, V. (2017). ¿En qué instituciones confían los peruanos?. El Comercio. https://www.ipsos.com/sites/default/files/ct/news/documents/2017-10/En%20que%20instituciones%20confian%20los%20peruanos.pdf
+
